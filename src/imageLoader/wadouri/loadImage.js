@@ -50,7 +50,6 @@ function loadImageFromPromise (dataSetPromise, imageId, frame = 0, sharedCacheKe
           });
         });
       } catch (err) {
-        console.log('Deu pau: ', err);
         reject({
           error: err,
           dataSet
