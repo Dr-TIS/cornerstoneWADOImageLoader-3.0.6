@@ -22,14 +22,25 @@ function getUncompressedImageFrame (dataSet, frameIndex) {
       throw new Error('frame exceeds size of pixelData');
     }
 
-    return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame);
+    // return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame);
+    return new Uint8Array(
+      dataSet.byteArray.buffer.slice(frameOffset, frameOffset + pixelsPerFrame)
+    );
+
   } else if (bitsAllocated === 16) {
     frameOffset = pixelDataOffset + frameIndex * pixelsPerFrame * 2;
     if (frameOffset >= dataSet.byteArray.length) {
       throw new Error('frame exceeds size of pixelData');
     }
 
-    return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame * 2);
+    // return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame * 2);
+    return new Uint8Array(
+      dataSet.byteArray.buffer.slice(
+        frameOffset,
+        frameOffset + pixelsPerFrame * 2
+      )
+    );
+
   } else if (bitsAllocated === 1) {
     frameOffset = pixelDataOffset + frameIndex * pixelsPerFrame * 0.125;
     if (frameOffset >= dataSet.byteArray.length) {
@@ -43,7 +54,13 @@ function getUncompressedImageFrame (dataSet, frameIndex) {
       throw new Error('frame exceeds size of pixelData');
     }
 
-    return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame * 4);
+    // return new Uint8Array(dataSet.byteArray.buffer, frameOffset, pixelsPerFrame * 4);
+    return new Uint8Array(
+      dataSet.byteArray.buffer.slice(
+        frameOffset,
+        frameOffset + pixelsPerFrame * 4
+      )
+    );
   }
 
   throw new Error('unsupported pixel format');
